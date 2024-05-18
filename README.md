@@ -1,2 +1,2 @@
-# Compiladores //
-Analisador Lexico
+# Compiladores 
+Analisador Lexico - Analisador Sintático
