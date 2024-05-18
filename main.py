@@ -66,7 +66,7 @@ def t_error(t):
 
 lexer = lex.lex()
 
-lexer.input("123 123.456 variavel \"texto\" int if // comentario")
+lexer.input("123 123.456 variavel \"texto\" int if if // comentario")
 
 for token in lexer:
     print(token)

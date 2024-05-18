@@ -1,0 +1,134 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    COMENTARIO
+    TEXTO
+
+Grammar
+
+Rule 0     S' -> DeclaracaoVariavel
+Rule 1     DeclaracaoVariavel -> Tipo ID SIMBOLO_ESPECIAL
+Rule 2     DeclaracaoVariavel -> Tipo ID SIMBOLO_ESPECIAL OPERADOR Expressao SIMBOLO_ESPECIAL
+Rule 3     Tipo -> PALAVRA_RESERVADA
+Rule 4     Expressao -> ID
+Rule 5     Expressao -> NUM_INT
+Rule 6     Expressao -> NUM_DEC
+
+Terminals, with rules where they appear
+
+COMENTARIO           : 
+ID                   : 1 2 4
+NUM_DEC              : 6
+NUM_INT              : 5
+OPERADOR             : 2
+PALAVRA_RESERVADA    : 3
+SIMBOLO_ESPECIAL     : 1 2 2
+TEXTO                : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+DeclaracaoVariavel   : 0
+Expressao            : 2
+Tipo                 : 1 2
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . DeclaracaoVariavel
+    (1) DeclaracaoVariavel -> . Tipo ID SIMBOLO_ESPECIAL
+    (2) DeclaracaoVariavel -> . Tipo ID SIMBOLO_ESPECIAL OPERADOR Expressao SIMBOLO_ESPECIAL
+    (3) Tipo -> . PALAVRA_RESERVADA
+
+    PALAVRA_RESERVADA shift and go to state 3
+
+    DeclaracaoVariavel             shift and go to state 1
+    Tipo                           shift and go to state 2
+
+state 1
+
+    (0) S' -> DeclaracaoVariavel .
+
+
+
+state 2
+
+    (1) DeclaracaoVariavel -> Tipo . ID SIMBOLO_ESPECIAL
+    (2) DeclaracaoVariavel -> Tipo . ID SIMBOLO_ESPECIAL OPERADOR Expressao SIMBOLO_ESPECIAL
+
+    ID              shift and go to state 4
+
+
+state 3
+
+    (3) Tipo -> PALAVRA_RESERVADA .
+
+    ID              reduce using rule 3 (Tipo -> PALAVRA_RESERVADA .)
+
+
+state 4
+
+    (1) DeclaracaoVariavel -> Tipo ID . SIMBOLO_ESPECIAL
+    (2) DeclaracaoVariavel -> Tipo ID . SIMBOLO_ESPECIAL OPERADOR Expressao SIMBOLO_ESPECIAL
+
+    SIMBOLO_ESPECIAL shift and go to state 5
+
+
+state 5
+
+    (1) DeclaracaoVariavel -> Tipo ID SIMBOLO_ESPECIAL .
+    (2) DeclaracaoVariavel -> Tipo ID SIMBOLO_ESPECIAL . OPERADOR Expressao SIMBOLO_ESPECIAL
+
+    $end            reduce using rule 1 (DeclaracaoVariavel -> Tipo ID SIMBOLO_ESPECIAL .)
+    OPERADOR        shift and go to state 6
+
+
+state 6
+
+    (2) DeclaracaoVariavel -> Tipo ID SIMBOLO_ESPECIAL OPERADOR . Expressao SIMBOLO_ESPECIAL
+    (4) Expressao -> . ID
+    (5) Expressao -> . NUM_INT
+    (6) Expressao -> . NUM_DEC
+
+    ID              shift and go to state 7
+    NUM_INT         shift and go to state 9
+    NUM_DEC         shift and go to state 10
+
+    Expressao                      shift and go to state 8
+
+state 7
+
+    (4) Expressao -> ID .
+
+    SIMBOLO_ESPECIAL reduce using rule 4 (Expressao -> ID .)
+
+
+state 8
+
+    (2) DeclaracaoVariavel -> Tipo ID SIMBOLO_ESPECIAL OPERADOR Expressao . SIMBOLO_ESPECIAL
+
+    SIMBOLO_ESPECIAL shift and go to state 11
+
+
+state 9
+
+    (5) Expressao -> NUM_INT .
+
+    SIMBOLO_ESPECIAL reduce using rule 5 (Expressao -> NUM_INT .)
+
+
+state 10
+
+    (6) Expressao -> NUM_DEC .
+
+    SIMBOLO_ESPECIAL reduce using rule 6 (Expressao -> NUM_DEC .)
+
+
+state 11
+
+    (2) DeclaracaoVariavel -> Tipo ID SIMBOLO_ESPECIAL OPERADOR Expressao SIMBOLO_ESPECIAL .
+
+    $end            reduce using rule 2 (DeclaracaoVariavel -> Tipo ID SIMBOLO_ESPECIAL OPERADOR Expressao SIMBOLO_ESPECIAL .)
+
