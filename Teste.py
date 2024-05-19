@@ -67,25 +67,38 @@ def t_error(t):
 
 lexer = lex.lex()
 
+palavras_reservadas_tipo = {'int', 'float', 'char', 'boolean', 'jgchcg'}
+
+
 # Grammar rules
 def p_DeclaracaoVariavel(p):
-    '''DeclaracaoVariavel : Tipo ID SIMBOLO_ESPECIAL
-                          | Tipo ID SIMBOLO_ESPECIAL OPERADOR Expressao SIMBOLO_ESPECIAL'''
-
+    '''DeclaracaoVariavel : Tipo ID Finalizacao
+                          | Tipo ID Opatribuicao Expressao Finalizacao'''
 
 def p_Tipo(p):
+
     '''Tipo : PALAVRA_RESERVADA
         '''
     token = p.slice[1]  # Obtém o token correspondente à primeira produção da regra 'Tipo'
-    if token is not None and token.type == 'PALAVRA_RESERVADA' and token.value == 'int':
-        print("A palavra reservada 'int' foi reconhecida.")
+    if token is not None and token.type == 'PALAVRA_RESERVADA' and token.value in palavras_reservadas_tipo:
+        return
     else:
-        print("A entrada não corresponde à palavra reservada 'int'.")
+        p_error(p)
 
 def p_Expressao(p):
     '''Expressao : ID
                  | NUM_INT
                  | NUM_DEC'''
+    
+def p_Finalizacao(p):
+    '''Finalizacao : SIMBOLO_ESPECIAL'''
+    if p[1] != ';':
+        p_error(p)
+
+def p_Opatribuicao(p):
+    '''Opatribuicao : OPERADOR'''
+    if p[1] != '=':
+        p_error(p)
 
 def p_error(p):
     print("Erro de sintaxe")
@@ -94,6 +107,6 @@ def p_error(p):
 parser = yacc.yacc()
 
 # Test the parser
-entrada = "int x,"
+entrada = "int x = 10.0;"
 parser.parse(entrada)
 

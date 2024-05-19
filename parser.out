@@ -8,12 +8,14 @@ Unused terminals:
 Grammar
 
 Rule 0     S' -> DeclaracaoVariavel
-Rule 1     DeclaracaoVariavel -> Tipo ID SIMBOLO_ESPECIAL
-Rule 2     DeclaracaoVariavel -> Tipo ID SIMBOLO_ESPECIAL OPERADOR Expressao SIMBOLO_ESPECIAL
+Rule 1     DeclaracaoVariavel -> Tipo ID Finalizacao
+Rule 2     DeclaracaoVariavel -> Tipo ID Opatribuicao Expressao Finalizacao
 Rule 3     Tipo -> PALAVRA_RESERVADA
 Rule 4     Expressao -> ID
 Rule 5     Expressao -> NUM_INT
 Rule 6     Expressao -> NUM_DEC
+Rule 7     Finalizacao -> SIMBOLO_ESPECIAL
+Rule 8     Opatribuicao -> OPERADOR
 
 Terminals, with rules where they appear
 
@@ -21,9 +23,9 @@ COMENTARIO           :
 ID                   : 1 2 4
 NUM_DEC              : 6
 NUM_INT              : 5
-OPERADOR             : 2
+OPERADOR             : 8
 PALAVRA_RESERVADA    : 3
-SIMBOLO_ESPECIAL     : 1 2 2
+SIMBOLO_ESPECIAL     : 7
 TEXTO                : 
 error                : 
 
@@ -31,6 +33,8 @@ Nonterminals, with rules where they appear
 
 DeclaracaoVariavel   : 0
 Expressao            : 2
+Finalizacao          : 1 2
+Opatribuicao         : 2
 Tipo                 : 1 2
 
 Parsing method: LALR
@@ -38,8 +42,8 @@ Parsing method: LALR
 state 0
 
     (0) S' -> . DeclaracaoVariavel
-    (1) DeclaracaoVariavel -> . Tipo ID SIMBOLO_ESPECIAL
-    (2) DeclaracaoVariavel -> . Tipo ID SIMBOLO_ESPECIAL OPERADOR Expressao SIMBOLO_ESPECIAL
+    (1) DeclaracaoVariavel -> . Tipo ID Finalizacao
+    (2) DeclaracaoVariavel -> . Tipo ID Opatribuicao Expressao Finalizacao
     (3) Tipo -> . PALAVRA_RESERVADA
 
     PALAVRA_RESERVADA shift and go to state 3
@@ -55,8 +59,8 @@ state 1
 
 state 2
 
-    (1) DeclaracaoVariavel -> Tipo . ID SIMBOLO_ESPECIAL
-    (2) DeclaracaoVariavel -> Tipo . ID SIMBOLO_ESPECIAL OPERADOR Expressao SIMBOLO_ESPECIAL
+    (1) DeclaracaoVariavel -> Tipo . ID Finalizacao
+    (2) DeclaracaoVariavel -> Tipo . ID Opatribuicao Expressao Finalizacao
 
     ID              shift and go to state 4
 
@@ -70,65 +74,86 @@ state 3
 
 state 4
 
-    (1) DeclaracaoVariavel -> Tipo ID . SIMBOLO_ESPECIAL
-    (2) DeclaracaoVariavel -> Tipo ID . SIMBOLO_ESPECIAL OPERADOR Expressao SIMBOLO_ESPECIAL
+    (1) DeclaracaoVariavel -> Tipo ID . Finalizacao
+    (2) DeclaracaoVariavel -> Tipo ID . Opatribuicao Expressao Finalizacao
+    (7) Finalizacao -> . SIMBOLO_ESPECIAL
+    (8) Opatribuicao -> . OPERADOR
 
-    SIMBOLO_ESPECIAL shift and go to state 5
+    SIMBOLO_ESPECIAL shift and go to state 7
+    OPERADOR        shift and go to state 8
 
+    Finalizacao                    shift and go to state 5
+    Opatribuicao                   shift and go to state 6
 
 state 5
 
-    (1) DeclaracaoVariavel -> Tipo ID SIMBOLO_ESPECIAL .
-    (2) DeclaracaoVariavel -> Tipo ID SIMBOLO_ESPECIAL . OPERADOR Expressao SIMBOLO_ESPECIAL
+    (1) DeclaracaoVariavel -> Tipo ID Finalizacao .
 
-    $end            reduce using rule 1 (DeclaracaoVariavel -> Tipo ID SIMBOLO_ESPECIAL .)
-    OPERADOR        shift and go to state 6
+    $end            reduce using rule 1 (DeclaracaoVariavel -> Tipo ID Finalizacao .)
 
 
 state 6
 
-    (2) DeclaracaoVariavel -> Tipo ID SIMBOLO_ESPECIAL OPERADOR . Expressao SIMBOLO_ESPECIAL
+    (2) DeclaracaoVariavel -> Tipo ID Opatribuicao . Expressao Finalizacao
     (4) Expressao -> . ID
     (5) Expressao -> . NUM_INT
     (6) Expressao -> . NUM_DEC
 
-    ID              shift and go to state 7
-    NUM_INT         shift and go to state 9
-    NUM_DEC         shift and go to state 10
+    ID              shift and go to state 9
+    NUM_INT         shift and go to state 11
+    NUM_DEC         shift and go to state 12
 
-    Expressao                      shift and go to state 8
+    Expressao                      shift and go to state 10
 
 state 7
+
+    (7) Finalizacao -> SIMBOLO_ESPECIAL .
+
+    $end            reduce using rule 7 (Finalizacao -> SIMBOLO_ESPECIAL .)
+
+
+state 8
+
+    (8) Opatribuicao -> OPERADOR .
+
+    ID              reduce using rule 8 (Opatribuicao -> OPERADOR .)
+    NUM_INT         reduce using rule 8 (Opatribuicao -> OPERADOR .)
+    NUM_DEC         reduce using rule 8 (Opatribuicao -> OPERADOR .)
+
+
+state 9
 
     (4) Expressao -> ID .
 
     SIMBOLO_ESPECIAL reduce using rule 4 (Expressao -> ID .)
 
 
-state 8
+state 10
 
-    (2) DeclaracaoVariavel -> Tipo ID SIMBOLO_ESPECIAL OPERADOR Expressao . SIMBOLO_ESPECIAL
+    (2) DeclaracaoVariavel -> Tipo ID Opatribuicao Expressao . Finalizacao
+    (7) Finalizacao -> . SIMBOLO_ESPECIAL
 
-    SIMBOLO_ESPECIAL shift and go to state 11
+    SIMBOLO_ESPECIAL shift and go to state 7
 
+    Finalizacao                    shift and go to state 13
 
-state 9
+state 11
 
     (5) Expressao -> NUM_INT .
 
     SIMBOLO_ESPECIAL reduce using rule 5 (Expressao -> NUM_INT .)
 
 
-state 10
+state 12
 
     (6) Expressao -> NUM_DEC .
 
     SIMBOLO_ESPECIAL reduce using rule 6 (Expressao -> NUM_DEC .)
 
 
-state 11
+state 13
 
-    (2) DeclaracaoVariavel -> Tipo ID SIMBOLO_ESPECIAL OPERADOR Expressao SIMBOLO_ESPECIAL .
+    (2) DeclaracaoVariavel -> Tipo ID Opatribuicao Expressao Finalizacao .
 
-    $end            reduce using rule 2 (DeclaracaoVariavel -> Tipo ID SIMBOLO_ESPECIAL OPERADOR Expressao SIMBOLO_ESPECIAL .)
+    $end            reduce using rule 2 (DeclaracaoVariavel -> Tipo ID Opatribuicao Expressao Finalizacao .)
 
