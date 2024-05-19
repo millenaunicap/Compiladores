@@ -107,6 +107,6 @@ def p_error(p):
 parser = yacc.yacc()
 
 # Test the parser
-entrada = "int x = 10.0;"
+entrada = "int x = 10;"
 parser.parse(entrada)
 
