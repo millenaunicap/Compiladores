@@ -10,7 +10,37 @@ tokens = [
     'PALAVRA_RESERVADA',
     'COMENTARIO',
     'OPERADOR',
-    'SIMBOLO_ESPECIAL'
+    'SIMBOLO_ESPECIAL',
+          'COMMA',
+          'MINUS',
+          'PLUS',
+          'DIV',
+          'MULT',
+          'LPAREN',
+          'RPAREN',
+          'SEMICOLON',
+          'EQUALS',
+          'LBRACE',
+          'RBRACE',
+          'RBRACKET',
+          'LBRACKET',
+          'DOT',
+          'COMMENTS',
+          'COLON',
+          'AND',
+          'OR',
+          'MOD',
+          'NOT',
+          'INCREMENT',
+          'DECREMENT',
+          'MAIOR_QUE',
+          'MENOR_QUE',
+          'MA_IGUAL',
+          'ME_IGUAL',
+          'DIF_DE',
+          'COMPARA',
+          'ARROW'
+    
 ]
 
 # Palavras reservadas
@@ -27,7 +57,7 @@ reserved_words = {
     'scanf': 'PALAVRA_RESERVADA',
     'println': 'PALAVRA_RESERVADA',
     'main': 'PALAVRA_RESERVADA',
-    'return': 'PALAVRA_RESERVADA',
+    'return': 'RETURN',
     'struct': 'PALAVRA_RESERVADA',
     'double': 'PALAVRA_RESERVADA',
     'long': 'PALAVRA_RESERVADA',
@@ -49,8 +79,42 @@ reserved_words = {
     'enum': 'PALAVRA_RESERVADA',
     'extern': 'PALAVRA_RESERVADA',
     'register': 'PALAVRA_RESERVADA',
-    'union': 'PALAVRA_RESERVADA'
+    'union': 'PALAVRA_RESERVADA',
+    'public': 'PALAVRA_RESERVADA',
+    'void': 'PALAVRA_RESERVADA',
+    'private': 'PALAVRA_RESERVADA'
+
 }
+
+t_MAIOR_QUE = r'\>'
+t_MENOR_QUE = r'\<'
+t_MA_IGUAL = r'\>\='
+t_ME_IGUAL = r'\<\='
+t_DIF_DE = r'\!\='
+t_COMPARA = r'\=\='
+t_COMMA = r'\,'
+t_MINUS = r'-'
+t_PLUS = r'\+'
+t_MULT = r'\*'
+t_DIV = r'\/(?!\/)'
+t_LPAREN = r'\('
+t_RPAREN = r'\)'
+t_SEMICOLON = r';'
+t_EQUALS = r'='
+t_LBRACE = r'\{'
+t_RBRACE = r'\}'
+t_LBRACKET = r'\['
+t_RBRACKET = r'\]'
+t_DOT = r'\.'
+t_COMMENTS = r'//.*'
+t_COLON = r':'
+t_AND = r'\&\&'
+t_OR = r'\|\|'
+t_MOD = r'\%'
+t_NOT = r'\!'
+t_INCREMENT = r'\+\+'
+t_DECREMENT = r'\-\-'
+t_ARROW = r'\-\>'
 
 # Dicionário para armazenar identificadores
 identifiers = {}
@@ -116,9 +180,33 @@ palavras_reservadas_tipo = {'int', 'float', 'char', 'boolean', 'jgchcg'}
 
 
 # Grammar rules
+
 def p_DeclaracaoVariavel(p):
-    '''DeclaracaoVariavel : Tipo ID Finalizacao
+    '''DeclaracaoVariavel : Tipo ID Finalizacao 
                           | Tipo ID Opatribuicao Expressao Finalizacao'''
+
+
+def p_DeclaracaoFunc(p):
+    '''DeclaracaoFunc : Tipo ID LPAREN Parametros RPAREN LBRACE Declaracao RBRACE
+                          | Tipo ID LPAREN RPAREN LBRACE Declaracao RBRACE '''
+
+def p_Declaracao(p):
+    ''' Declaracao : DeclaracaoVariavel
+               | DeclaracaoFuncao
+               | Expressao '''
+
+def p_Parametro(p):
+    '''
+    Parametro : Tipo ID
+             | Tipo ID LBRACKET RBRACKET
+             | Tipo DOT DOT DOT ID
+    '''
+
+def p_Parametros(p):
+    '''
+    Parametros : Parametro
+               | Parametro COMMA Parametro
+    '''
 
 def p_Tipo(p):
 

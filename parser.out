@@ -2,7 +2,28 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
+    AND
+    ARROW
+    COLON
     COMENTARIO
+    COMMENTS
+    COMPARA
+    DECREMENT
+    DIF_DE
+    DIV
+    EQUALS
+    INCREMENT
+    MAIOR_QUE
+    MA_IGUAL
+    MENOR_QUE
+    ME_IGUAL
+    MINUS
+    MOD
+    MULT
+    NOT
+    OR
+    PLUS
+    SEMICOLON
     TEXTO
 
 Grammar
@@ -10,150 +31,74 @@ Grammar
 Rule 0     S' -> DeclaracaoVariavel
 Rule 1     DeclaracaoVariavel -> Tipo ID Finalizacao
 Rule 2     DeclaracaoVariavel -> Tipo ID Opatribuicao Expressao Finalizacao
-Rule 3     Tipo -> PALAVRA_RESERVADA
-Rule 4     Expressao -> ID
-Rule 5     Expressao -> NUM_INT
-Rule 6     Expressao -> NUM_DEC
-Rule 7     Finalizacao -> SIMBOLO_ESPECIAL
-Rule 8     Opatribuicao -> OPERADOR
+Rule 3     DeclaracaoFunc -> Tipo ID LPAREN Parametros RPAREN LBRACE Declaracao RBRACE
+Rule 4     DeclaracaoFunc -> Tipo ID LPAREN RPAREN LBRACE Declaracao RBRACE
+Rule 5     Declaracao -> DeclaracaoVariavel
+Rule 6     Declaracao -> DeclaracaoFuncao
+Rule 7     Declaracao -> Expressao
+Rule 8     Parametro -> Tipo ID
+Rule 9     Parametro -> Tipo ID LBRACKET RBRACKET
+Rule 10    Parametro -> Tipo DOT DOT DOT ID
+Rule 11    Parametros -> Parametro
+Rule 12    Parametros -> Parametro COMMA Parametro
+Rule 13    Tipo -> PALAVRA_RESERVADA
+Rule 14    Expressao -> ID
+Rule 15    Expressao -> NUM_INT
+Rule 16    Expressao -> NUM_DEC
+Rule 17    Finalizacao -> SIMBOLO_ESPECIAL
+Rule 18    Opatribuicao -> OPERADOR
 
 Terminals, with rules where they appear
 
+AND                  : 
+ARROW                : 
+COLON                : 
 COMENTARIO           : 
-ID                   : 1 2 4
-NUM_DEC              : 6
-NUM_INT              : 5
-OPERADOR             : 8
-PALAVRA_RESERVADA    : 3
-SIMBOLO_ESPECIAL     : 7
+COMMA                : 12
+COMMENTS             : 
+COMPARA              : 
+DECREMENT            : 
+DIF_DE               : 
+DIV                  : 
+DOT                  : 10 10 10
+EQUALS               : 
+ID                   : 1 2 3 4 8 9 10 14
+INCREMENT            : 
+LBRACE               : 3 4
+LBRACKET             : 9
+LPAREN               : 3 4
+MAIOR_QUE            : 
+MA_IGUAL             : 
+MENOR_QUE            : 
+ME_IGUAL             : 
+MINUS                : 
+MOD                  : 
+MULT                 : 
+NOT                  : 
+NUM_DEC              : 16
+NUM_INT              : 15
+OPERADOR             : 18
+OR                   : 
+PALAVRA_RESERVADA    : 13
+PLUS                 : 
+RBRACE               : 3 4
+RBRACKET             : 9
+RPAREN               : 3 4
+SEMICOLON            : 
+SIMBOLO_ESPECIAL     : 17
 TEXTO                : 
 error                : 
 
 Nonterminals, with rules where they appear
 
-DeclaracaoVariavel   : 0
-Expressao            : 2
+Declaracao           : 3 4
+DeclaracaoFunc       : 
+DeclaracaoFuncao     : 6
+DeclaracaoVariavel   : 5 0
+Expressao            : 2 7
 Finalizacao          : 1 2
 Opatribuicao         : 2
-Tipo                 : 1 2
-
-Parsing method: LALR
-
-state 0
-
-    (0) S' -> . DeclaracaoVariavel
-    (1) DeclaracaoVariavel -> . Tipo ID Finalizacao
-    (2) DeclaracaoVariavel -> . Tipo ID Opatribuicao Expressao Finalizacao
-    (3) Tipo -> . PALAVRA_RESERVADA
-
-    PALAVRA_RESERVADA shift and go to state 3
-
-    DeclaracaoVariavel             shift and go to state 1
-    Tipo                           shift and go to state 2
-
-state 1
-
-    (0) S' -> DeclaracaoVariavel .
-
-
-
-state 2
-
-    (1) DeclaracaoVariavel -> Tipo . ID Finalizacao
-    (2) DeclaracaoVariavel -> Tipo . ID Opatribuicao Expressao Finalizacao
-
-    ID              shift and go to state 4
-
-
-state 3
-
-    (3) Tipo -> PALAVRA_RESERVADA .
-
-    ID              reduce using rule 3 (Tipo -> PALAVRA_RESERVADA .)
-
-
-state 4
-
-    (1) DeclaracaoVariavel -> Tipo ID . Finalizacao
-    (2) DeclaracaoVariavel -> Tipo ID . Opatribuicao Expressao Finalizacao
-    (7) Finalizacao -> . SIMBOLO_ESPECIAL
-    (8) Opatribuicao -> . OPERADOR
-
-    SIMBOLO_ESPECIAL shift and go to state 7
-    OPERADOR        shift and go to state 8
-
-    Finalizacao                    shift and go to state 5
-    Opatribuicao                   shift and go to state 6
-
-state 5
-
-    (1) DeclaracaoVariavel -> Tipo ID Finalizacao .
-
-    $end            reduce using rule 1 (DeclaracaoVariavel -> Tipo ID Finalizacao .)
-
-
-state 6
-
-    (2) DeclaracaoVariavel -> Tipo ID Opatribuicao . Expressao Finalizacao
-    (4) Expressao -> . ID
-    (5) Expressao -> . NUM_INT
-    (6) Expressao -> . NUM_DEC
-
-    ID              shift and go to state 9
-    NUM_INT         shift and go to state 11
-    NUM_DEC         shift and go to state 12
-
-    Expressao                      shift and go to state 10
-
-state 7
-
-    (7) Finalizacao -> SIMBOLO_ESPECIAL .
-
-    $end            reduce using rule 7 (Finalizacao -> SIMBOLO_ESPECIAL .)
-
-
-state 8
-
-    (8) Opatribuicao -> OPERADOR .
-
-    ID              reduce using rule 8 (Opatribuicao -> OPERADOR .)
-    NUM_INT         reduce using rule 8 (Opatribuicao -> OPERADOR .)
-    NUM_DEC         reduce using rule 8 (Opatribuicao -> OPERADOR .)
-
-
-state 9
-
-    (4) Expressao -> ID .
-
-    SIMBOLO_ESPECIAL reduce using rule 4 (Expressao -> ID .)
-
-
-state 10
-
-    (2) DeclaracaoVariavel -> Tipo ID Opatribuicao Expressao . Finalizacao
-    (7) Finalizacao -> . SIMBOLO_ESPECIAL
-
-    SIMBOLO_ESPECIAL shift and go to state 7
-
-    Finalizacao                    shift and go to state 13
-
-state 11
-
-    (5) Expressao -> NUM_INT .
-
-    SIMBOLO_ESPECIAL reduce using rule 5 (Expressao -> NUM_INT .)
-
-
-state 12
-
-    (6) Expressao -> NUM_DEC .
-
-    SIMBOLO_ESPECIAL reduce using rule 6 (Expressao -> NUM_DEC .)
-
-
-state 13
-
-    (2) DeclaracaoVariavel -> Tipo ID Opatribuicao Expressao Finalizacao .
-
-    $end            reduce using rule 2 (DeclaracaoVariavel -> Tipo ID Opatribuicao Expressao Finalizacao .)
+Parametro            : 11 12 12
+Parametros           : 3
+Tipo                 : 1 2 3 4 8 9 10
 

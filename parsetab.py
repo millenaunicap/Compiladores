@@ -6,7 +6,7 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'COMENTARIO ID NUM_DEC NUM_INT OPERADOR PALAVRA_RESERVADA SIMBOLO_ESPECIAL TEXTODeclaracaoVariavel : Tipo ID Finalizacao\n                          | Tipo ID Opatribuicao Expressao FinalizacaoTipo : PALAVRA_RESERVADA\n        Expressao : ID\n                 | NUM_INT\n                 | NUM_DECFinalizacao : SIMBOLO_ESPECIALOpatribuicao : OPERADOR'
+_lr_signature = 'COMENTARIO ID NUM_DEC NUM_INT OPERADOR PALAVRA_RESERVADA SIMBOLO_ESPECIAL TEXTODeclaracaoVariavel : Tipo ID Finalizacao \n| Tipo ID Opatribuicao Expressao FinalizacaoTipo : PALAVRA_RESERVADA\n        Expressao : ID\n| NUM_INT\n| NUM_DECFinalizacao : SIMBOLO_ESPECIALOpatribuicao : OPERADOR'
     
 _lr_action_items = {'PALAVRA_RESERVADA':([0,],[3,]),'$end':([1,5,7,13,],[0,-1,-7,-2,]),'ID':([2,3,6,8,],[4,-3,9,-8,]),'SIMBOLO_ESPECIAL':([4,9,10,11,12,],[7,-4,7,-5,-6,]),'OPERADOR':([4,],[8,]),'NUM_INT':([6,8,],[11,-8,]),'NUM_DEC':([6,8,],[12,-8,]),}
 
@@ -27,12 +27,12 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> DeclaracaoVariavel","S'",1,None,None,None),
-  ('DeclaracaoVariavel -> Tipo ID Finalizacao','DeclaracaoVariavel',3,'p_DeclaracaoVariavel','Teste.py',75),
-  ('DeclaracaoVariavel -> Tipo ID Opatribuicao Expressao Finalizacao','DeclaracaoVariavel',5,'p_DeclaracaoVariavel','Teste.py',76),
-  ('Tipo -> PALAVRA_RESERVADA','Tipo',1,'p_Tipo','Teste.py',79),
-  ('Expressao -> ID','Expressao',1,'p_Expressao','Teste.py',89),
-  ('Expressao -> NUM_INT','Expressao',1,'p_Expressao','Teste.py',90),
-  ('Expressao -> NUM_DEC','Expressao',1,'p_Expressao','Teste.py',91),
-  ('Finalizacao -> SIMBOLO_ESPECIAL','Finalizacao',1,'p_Finalizacao','Teste.py',94),
-  ('Opatribuicao -> OPERADOR','Opatribuicao',1,'p_Opatribuicao','Teste.py',99),
+  ('DeclaracaoVariavel -> Tipo ID Finalizacao','DeclaracaoVariavel',3,'p_DeclaracaoVariavel','DeclaracaoVar.py',129),
+  ('DeclaracaoVariavel -> Tipo ID Opatribuicao Expressao Finalizacao','DeclaracaoVariavel',5,'p_DeclaracaoVariavel','DeclaracaoVar.py',130),
+  ('Tipo -> PALAVRA_RESERVADA','Tipo',1,'p_Tipo','DeclaracaoVar.py',133),
+  ('Expressao -> ID','Expressao',1,'p_Expressao','DeclaracaoVar.py',143),
+  ('Expressao -> NUM_INT','Expressao',1,'p_Expressao','DeclaracaoVar.py',144),
+  ('Expressao -> NUM_DEC','Expressao',1,'p_Expressao','DeclaracaoVar.py',145),
+  ('Finalizacao -> SIMBOLO_ESPECIAL','Finalizacao',1,'p_Finalizacao','DeclaracaoVar.py',148),
+  ('Opatribuicao -> OPERADOR','Opatribuicao',1,'p_Opatribuicao','DeclaracaoVar.py',153),
 ]
